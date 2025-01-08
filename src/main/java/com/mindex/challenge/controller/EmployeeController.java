@@ -1,6 +1,7 @@
 package com.mindex.challenge.controller;
 
 import com.mindex.challenge.data.Employee;
+import com.mindex.challenge.error.EmployeeNotFound;
 import com.mindex.challenge.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,13 @@ public class EmployeeController {
     public Employee read(@PathVariable String id) {
         LOG.debug("Received employee read request for id [{}]", id);
 
-        return employeeService.read(id);
+        Employee employee = employeeService.read(id);
+
+        if (employee == null) {
+            throw new EmployeeNotFound(id);
+        }
+
+        return employee;
     }
 
     @PutMapping("/employee/{id}")
