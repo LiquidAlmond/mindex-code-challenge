@@ -1,7 +1,6 @@
-package com.mindex.challenge.service.impl;
+package com.mindex.challenge.controller;
 
 import com.mindex.challenge.data.Compensation;
-import com.mindex.challenge.service.CompensationService;
 import com.mindex.challenge.service.EmployeeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,11 +15,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CompensationServiceImplTest {
+public class CompensationControllerTest {
     private String compensationUrl;
     private String compensationIdUrl;
     private String compensationHistoryUrl;
