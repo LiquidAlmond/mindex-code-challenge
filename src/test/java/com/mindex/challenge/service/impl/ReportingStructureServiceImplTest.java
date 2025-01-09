@@ -129,7 +129,7 @@ public class ReportingStructureServiceImplTest {
         assertNull(reporting);
     }
 
-    private Map<String, List<String>> testReports = Map.ofEntries(
+    final private Map<String, List<String>> testReports = Map.ofEntries(
             Map.entry("1", List.of("2", "3")),
             Map.entry("2", List.of("4", "5")),
             Map.entry("3", List.of("6"))

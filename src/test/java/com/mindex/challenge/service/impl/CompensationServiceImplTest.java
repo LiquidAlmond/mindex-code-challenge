@@ -25,9 +25,6 @@ public class CompensationServiceImplTest {
     private String compensationIdUrl;
     private String compensationHistoryUrl;
 
-    @Autowired
-    private CompensationService compensationService;
-
     @MockBean
     private EmployeeService employeeService;
 
