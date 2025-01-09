@@ -33,6 +33,10 @@ public class EmployeeController {
 
         Employee employee = employeeService.read(id);
 
+        /*
+         * EmployeeService.read method was throwing RuntimeException when the id wasn't in the database.
+         * It's better to return a 404 in that situation.
+         */
         if (employee == null) {
             throw new EmployeeNotFound(id);
         }

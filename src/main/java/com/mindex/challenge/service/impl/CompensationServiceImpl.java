@@ -28,7 +28,7 @@ public class CompensationServiceImpl implements CompensationService {
     public Compensation create(Compensation compensation) {
         LOG.debug("Creating employee compensation [{}]", compensation);
 
-       if (!employeeService.exists(compensation.getEmployeeId())) {
+        if (!employeeService.exists(compensation.getEmployeeId())) {
             return null;
         }
 
@@ -41,6 +41,9 @@ public class CompensationServiceImpl implements CompensationService {
     public Compensation readCurrent(String id) {
         LOG.debug("Reading current compensation for employee id [{}]", id);
 
+        // I debated with myself whether I should use a stream or a standard loop. Given
+        // the simplicity of our data, I opted for the only slightly less efficient but
+        // more readable (imho) method.
         return compensationRepository.findByEmployeeId(id)
                 .stream()
                 .filter(compensation -> compensation.getEffectiveDate().isBefore(LocalDate.now()))
@@ -52,6 +55,7 @@ public class CompensationServiceImpl implements CompensationService {
     public List<Compensation> read(String id) {
         LOG.debug("Reading all compensation for employee id [{}]", id);
 
+        // Same debate and decision as above.
         return compensationRepository.findByEmployeeId(id)
                 .stream()
                 .sorted(Comparator.comparing(Compensation::getEffectiveDate).reversed())

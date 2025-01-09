@@ -37,6 +37,9 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         return reportingStructure;
     }
 
+    /*
+     * Typical breadth-first search.
+     */
     private Integer findDirectReportCount(String employeeId) {
         Queue<String> unprocessedIds = new LinkedList<>();
         Set<String> visited = new HashSet<>();

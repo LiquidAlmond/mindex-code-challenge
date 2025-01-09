@@ -23,9 +23,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         LOG.debug("Creating employee [{}]", employee);
 
         employee.setEmployeeId(UUID.randomUUID().toString());
-        employeeRepository.insert(employee);
 
-        return employee;
+        // We were previously returning what we were given instead of
+        // what was saved.
+        return employeeRepository.insert(employee);
     }
 
     @Override
@@ -42,6 +43,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    // I could probably just use the read method just as well and check for
+    // null, but decided this reads better in the calling method.
     @Override
     public boolean exists(String id) {
         LOG.debug("Checking if employee with id [{}] exists", id);

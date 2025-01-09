@@ -44,6 +44,9 @@ public class CompensationController {
         return compensation;
     }
 
+    /*
+     * Not requested in the tasks, but demonstrates why I modeled Compensation the way I did.
+     */
     @GetMapping("/compensation/{id}/history")
     public List<Compensation> readHistory(@PathVariable String id) {
         LOG.debug("Received compensation read request for id [{}]", id);

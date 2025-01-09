@@ -19,6 +19,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'de.bwaldvogel:mongo-java-server:1.44.0'
+    // Added springdoc because Swagger is much easier for manual API testing than
+    // hunting down Postman or something similar.
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
