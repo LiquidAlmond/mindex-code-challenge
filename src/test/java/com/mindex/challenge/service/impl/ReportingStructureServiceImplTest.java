@@ -13,13 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +24,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ReportingStructureServiceImplTest {
-
     private String reportingStructureUrl;
-    private String employeeIdUrl;
 
     @Autowired
     private ReportingStructureService reportingStructureService;
@@ -47,10 +41,7 @@ public class ReportingStructureServiceImplTest {
     @Before
     public void setup() {
         reportingStructureUrl = "http://localhost:" + port + "/reporting-structure/{id}";
-    }
 
-    @Test
-    public void testDirectReportCount() {
         Mockito.when(employeeService.read(Mockito.anyString())).thenAnswer(params -> {
             String employeeId = params.getArgument(0);
 
@@ -75,6 +66,39 @@ public class ReportingStructureServiceImplTest {
 
             return employee;
         });
+    }
+
+    @Test
+    public void testRead() {
+        ReportingStructure reportingStructure = restTemplate.getForEntity(
+                reportingStructureUrl,
+                ReportingStructure.class,
+                "1"
+        ).getBody();
+
+        assertNotNull(reportingStructure);
+        assertEquals(5, reportingStructure.getNumberOfReports());
+
+        reportingStructure = restTemplate.getForEntity(
+                reportingStructureUrl,
+                ReportingStructure.class,
+                "6"
+        ).getBody();
+
+        assertNotNull(reportingStructure);
+        assertEquals(0, reportingStructure.getNumberOfReports());
+
+        ResponseEntity<ReportingStructure> responseEntity = restTemplate.getForEntity(
+                reportingStructureUrl,
+                ReportingStructure.class,
+                "7"
+        );
+        assertNotNull(responseEntity);
+        assertEquals(404, responseEntity.getStatusCode().value());
+    }
+
+    @Test
+    public void testDirectReportCount() {
         ReportingStructure reporting;
 
         reporting = reportingStructureService.read("1");

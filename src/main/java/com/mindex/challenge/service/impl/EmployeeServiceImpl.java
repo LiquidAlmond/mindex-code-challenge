@@ -6,6 +6,7 @@ import com.mindex.challenge.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
 
@@ -39,5 +40,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         LOG.debug("Updating employee [{}]", employee);
 
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public boolean exists(String id) {
+        LOG.debug("Checking if employee with id [{}] exists", id);
+        Employee searchEmployee = new Employee();
+        searchEmployee.setEmployeeId(id);
+        return employeeRepository.exists(Example.of(searchEmployee));
     }
 }
